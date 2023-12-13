@@ -13,48 +13,94 @@ while True:
     else:
         print("Please only enter 'investment' or 'bond'. ")
 
-# if user chooses investment, ask user to input for various information. If information typed incorrectly,
+# if user chooses investment, ask user to input for various information. If information is typed incorrectly,
 # ask user to re-type.
 if user_choice == "investment":
     while True:
         try:
-            deposit = float(input("What is the amount of money you would like to deposit?  "))
+            deposit = float(input("What is the amount of money you would like to deposit? £ "))
             break
         except ValueError:
             print("Please enter numbers only.")
 
     while True:
         try:
-            interest_rate = int(input("Please enter the interest rate (please enter whole number only)   "))
+            interest_rate = int(input("Please enter the interest rate (please enter whole number only)  "))
             break
         except ValueError:
             print("Please enter numbers only.")
 
     while True:
         try:
-            investment_time = int(input("How many years do you plan to invest?   "))
+            investment_time = int(input("How many years do you plan to invest?  "))
             break
         except ValueError:
             print("Please enter numbers only.")
 
     while True:
-        interest = input("Would you like a 'simple' or a 'compound' interest?   ")
+        interest = input("Would you like a 'simple' or a 'compound' interest?  ")
         if interest == "simple" or interest == "compound":
             break
         else:
             print("Please enter 'simple' or 'compound' only.")
 
-    # simple interest formula: A = P * (1 + r * t)
+    # simple interest formula in Python: A = P * (1 + r * t)
+    # compound interest formula in Python: A = P * math.pow((1 + r), t)
     # A = total amount once the interest has been applied
     # P = deposit
     # r = the interest entered by user divided by 100 (e.g.if 8% is entered, then r i 0.08)
     # t = the number of years that the money is being invested
 
-    # if user chooses simple interest:
+    # if user chooses simple interest calculate the value using simple interest formula A = P * (1 + r * t)
+    # rounded to 2 decimal places
     if interest == "simple":
-        simple_interest = deposit * (1 + (interest_rate / 100) * investment_time)
-        print(f"The amount of interest earned based on your {deposit} and {investment_time} years would be {simple_interest}")
+        simple_interest = round((deposit * (1 + interest_rate / 100 * investment_time)), 2)
+        print(f"The amount of interest earned based on your £{deposit} deposit and {investment_time}"
+              f" years investment time would be £{simple_interest}.")
 
-    # compound interest formula: A = P * math.pow
+    # if user chooses compound interest calculate the value using compound interest formula:
+    # A = P * math.pow((1 + r), t), rounded to 2 decimal places
     if interest == "compound":
-        compound_interest =
+        compound_interest = round(deposit * math.pow((1 + interest_rate/100), investment_time), 2)
+        print(f"The amount of interest earned based on your £{deposit} deposit and {investment_time} "
+              f"years investment would be £{compound_interest}.")
+
+# if user chooses bond, ask user to input for various information. If information is typed incorrectly,
+# ask user to re-type.
+if user_choice == "bond":
+    while True:
+        try:
+            present_house_value = int(input("What is the present value of the house? £ "))
+            break
+        except ValueError:
+            print("Please enter numbers only.")
+
+    while True:
+        try:
+            interest_rate_bond = int(input("Please enter the interest rate (please enter whole number only):  "))
+            break
+        except ValueError:
+            print("Please enter numbers only.")
+
+    while True:
+        try:
+            months_of_repayment = int(input("How many months do you plan to take to repay the bond?  "))
+            break
+        except ValueError:
+            print("Please enter numbers only.")
+
+    # the formula for the amount that a person will have to repay on a home loan each month (in Python):
+    # repayment = (i * P)/(1 - (1 + i)**(-n))
+    # P = the present value of the house
+    # i = the monthly interest rate, calculated by dividing the annual interest rate by 12. The interest
+    # rate entered by the user must be first divided by 100 before diving by 12.
+    # n = the number of months over which the bond will be repaid
+
+    #calculate the interest rate: divide user's input rate by 100, and then by 12:
+    int_rate_bond = (interest_rate_bond/100)/12
+
+    #calculate the monthly repayments, rounded to 2 decimal places
+    repayment = round((int_rate_bond * present_house_value)/(1 - (1 + int_rate_bond)**(-months_of_repayment)), 2)
+    print(f"The monthly repayments based on the present value of your house £{present_house_value},"
+          f" current interest rate {interest_rate_bond} % "
+          f"and the number of months you plan to repay ({months_of_repayment}), is £{repayment} per month.")
