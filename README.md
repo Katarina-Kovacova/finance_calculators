@@ -1,3 +1,5 @@
+HyperionDev Software Bootcamp Capstone project
+
 Program allows the user to access two different financial calculators: An investment calculator and a home loan repayment calculator. 
 The user is allowed to choose which calculation they want to use. 
 To calculate the interest, the user is asked to input various data (the deposited amount, interest rate, number of years they planning to invest).
